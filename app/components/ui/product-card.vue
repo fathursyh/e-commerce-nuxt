@@ -27,21 +27,23 @@
                 <span class="text-2xl font-bold text-gray-900 me-2">
                 ${{ productItem.sale_price?.toFixed(2) }}
               </span>
-              <span v-if="productItem.price !== 0" class="line-through text-muted">{{ productItem.price }}</span>
+              <span v-if="productItem.price !== 0" class="line-through text-muted">
+                {{ productItem.price }}
+              </span>
               </p>
-              <UButton
-                icon="i-heroicons-shopping-cart"
-                size="sm"
-                color="primary"
-                @click="addToCart({
-                  product_id: productItem.id,
-                  name: productItem.name,
-                  price: productItem.effective_price,
-                  quantity: 1
-                })"
-              >
-                Add to Cart
-              </UButton>
+                <UButton
+                  icon="i-heroicons-shopping-cart"
+                  size="sm"
+                  color="primary"
+                  @click="addToCart({
+                    product_id: productItem.id,
+                    name: productItem.name,
+                    price: productItem.effective_price,
+                    quantity: 1
+                  })"
+                >
+                  Add to Cart
+                </UButton>
             </div>
           </div>
         </UCard>

@@ -1,11 +1,6 @@
 export const useCartState = () => {
     const cart = useState<CartItem[]>("cart", () => []);
 
-    const saveCart = () => {
-        if (import.meta.client) {
-            localStorage.setItem("cart", JSON.stringify(cart.value));
-        }
-    };
     onMounted(() => {
         const stored = localStorage.getItem("cart");
         if (stored && cart.value.length === 0) {
@@ -20,6 +15,5 @@ export const useCartState = () => {
 
     return {
         cart,
-        saveCart,
     };
 };

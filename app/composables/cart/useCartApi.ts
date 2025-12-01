@@ -3,7 +3,7 @@ export const useCartApi = () => {
     const cartUrl = "/cart";
 
     async function addItem(product_id: string, quantity: number) {
-        $api(cartUrl + "/items", {
+        return $api<SingleResponse<{id: string, items: CartItem[]}>>(cartUrl + "/items", {
             method: "POST",
             body: {
                 product_id,
