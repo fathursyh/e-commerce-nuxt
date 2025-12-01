@@ -8,4 +8,14 @@ export default defineNuxtConfig({
   ui: {
     colorMode: false,
   },
+  runtimeConfig: {
+    public: {
+      apiBase: "http://localhost:8000/api/v1",
+    },
+  },
+  imports: {
+    dirs: [
+      "~/composables/**",
+    ],
+  },
 });

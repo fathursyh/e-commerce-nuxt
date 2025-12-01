@@ -10,12 +10,15 @@
         </UButton>
       </div>
 
-      <template v-if="pending">
-        <p>aa</p>
-      </template>
+      <div v-if="isError" class="h-32 w-full grid place-items-center">
+        <div class="flex flex-col justify-center items-center text-error">
+          <Icon name="i-heroicons-exclamation-circle" size="24" />
+          <p>Error fetching products.</p>
+        </div>
+      </div>
 
       <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <template v-for="product in featuredProducts?.data" :key="product.id">
+        <template v-for="product in featuredProducts?.data" :key="product?.id">
           <UiProductCard :product-item="product" />
         </template>
       </div>
@@ -23,8 +26,9 @@
 </template>
 
 <script setup lang="ts">
-    const { data: featuredProducts, pending } =
-      await useFetch<ArrayResponse<Product>>(
-      "http://localhost:8000/api/v1/products/featured",
-      );
+  import { useQuery } from "@tanstack/vue-query";
+
+  const { getFeatured } = useProductApi();
+    const { data: featuredProducts, suspense, isError } = useQuery({ queryKey: ["featured"], queryFn: getFeatured });
+    onServerPrefetch(async() => await suspense());
 </script>

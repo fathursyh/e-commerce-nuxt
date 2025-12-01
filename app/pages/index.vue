@@ -29,6 +29,6 @@
     </section>
 
     <!-- Featured Products -->
-     <HomeFeaturedProduct />
+     <LazyHomeFeaturedProduct hydrate-on-idle />
   </div>
 </template>
