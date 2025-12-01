@@ -29,6 +29,10 @@
   import { useQuery } from "@tanstack/vue-query";
 
   const { getFeatured } = useProductApi();
-    const { data: featuredProducts, suspense, isError } = useQuery({ queryKey: ["featured"], queryFn: getFeatured });
-    onServerPrefetch(async() => await suspense());
+    const {
+      data: featuredProducts,
+       suspense,
+       isError,
+    } = useQuery({ queryKey: ["featured"], queryFn: getFeatured });
+    await suspense();
 </script>

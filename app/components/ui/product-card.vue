@@ -33,6 +33,12 @@
                 icon="i-heroicons-shopping-cart"
                 size="sm"
                 color="primary"
+                @click="addToCart({
+                  product_id: productItem.id,
+                  name: productItem.name,
+                  price: productItem.effective_price,
+                  quantity: 1
+                })"
               >
                 Add to Cart
               </UButton>
@@ -45,4 +51,5 @@
     defineProps<{
         productItem: Product,
     }>();
+    const { addToCart } = useCart();
 </script>

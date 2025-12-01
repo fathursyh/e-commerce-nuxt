@@ -19,17 +19,7 @@
           <!-- Right Side Icons -->
           <div class="flex items-center space-x-2">
             <UButton icon="i-heroicons-magnifying-glass" variant="ghost" color="neutral" />
-
-            <!-- Cart Dropdown -->
-              <UButton color="neutral" variant="ghost" class="relative">
-                <UIcon name="i-heroicons-shopping-cart" class="w-5 h-5" />
-                <UBadge
-                  v-if="cartItemCount > 0"
-                  :label="cartItemCount.toString()"
-                  color="error"
-                  class="absolute -top-1 -right-1"
-                />
-              </UButton>
+            <UiCartDropdown />
             <!-- User Dropdown -->
             <UDropdownMenu :items="userMenuItems" :popper="{ placement: 'bottom-end' }">
               <UButton icon="i-heroicons-user" color="neutral" variant="ghost" />
@@ -41,7 +31,6 @@
 </template>
 
 <script setup lang="ts">
-const cartItemCount = 3;
 const userMenuItems = [
   [
     {

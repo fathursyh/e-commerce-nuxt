@@ -11,6 +11,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase: "http://localhost:8000/api/v1",
+      backend: "http://localhost:8000",
     },
   },
   imports: {
