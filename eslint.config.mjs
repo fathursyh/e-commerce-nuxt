@@ -25,7 +25,6 @@ export default withNuxt(
       // Consistent spacing inside braces
       "object-curly-spacing": ["error", "always"],
 
-      // No unused variables (Nuxt auto imports can cause false positives)
       "no-unused-vars": ["warn"],
       "space-before-function-paren": ["error", "never"],
       "no-multi-spaces": ["error"],

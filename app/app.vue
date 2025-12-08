@@ -2,7 +2,9 @@
   <NuxtLoadingIndicator />
   <NuxtLayout>
     <UApp>
-      <NuxtPage />
+      <UMain>
+        <NuxtPage />
+      </UMain>
     </UApp>
   </NuxtLayout>
 </template>

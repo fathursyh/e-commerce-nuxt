@@ -1,7 +1,7 @@
 export const useCartState = () => {
     const cart = useState<CartItem[]>("cart", () => []);
 
-    onMounted(() => {
+    function initCart() {
         const stored = localStorage.getItem("cart");
         if (stored && cart.value.length === 0) {
             try {
@@ -11,9 +11,10 @@ export const useCartState = () => {
                 localStorage.removeItem("cart");
             }
         }
-    });
+    }
 
     return {
         cart,
+        initCart,
     };
 };

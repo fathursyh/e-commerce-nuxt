@@ -21,8 +21,8 @@ export const useCartApi = () => {
         });
     }
 
-    async function removeItem(item: CartItem) {
-        return $api(cartUrl + "/items/" + item, {
+    async function removeItem(id: string | number) {
+        return $api(cartUrl + "/items/" + id, {
             method: "DELETE",
         });
     }

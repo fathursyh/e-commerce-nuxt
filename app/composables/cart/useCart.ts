@@ -1,6 +1,6 @@
 export const useCart = () => {
   const { cart } = useCartState();
-  const { addItem, updateItem } = useCartApi();
+  const { addItem, updateItem, removeItem, clearCart: clear } = useCartApi();
   const toast = useToast();
 
   const totalItems = computed(() =>
@@ -20,7 +20,7 @@ export const useCart = () => {
         existing.quantity += item.quantity ?? 1;
         toast.add({
           title: "Item has been updated!",
-          description: existing.name + "'s quantity has been updated successfully.",
+          description: item.product?.name + "'s quantity has been updated successfully.",
         });
       } else {
         const { data } = await addItem(item.product_id.toString(), 1);
@@ -28,7 +28,7 @@ export const useCart = () => {
         cart.value.push(...data.items);
         toast.add({
           title: "Item has been added!",
-          description: item.name + " has been added successfully to your cart.",
+          description: item.product?.name + " has been added successfully to your cart.",
         });
       }
       saveCart();
@@ -41,20 +41,41 @@ export const useCart = () => {
     }
   };
 
-  const removeFromCart = (id: string | number) => {
-    cart.value = cart.value.filter((i) => i.id !== id);
+  const removeFromCart = (item: CartItem) => {
+    cart.value = cart.value.filter((i) => i.id !== item.id);
+    removeItem(item.id!);
     saveCart();
+    toast.add({
+      title: "Item has been removed!",
+      description: item.product?.name + " has been removed from your cart.",
+    });
   };
 
   const updateQty = (id: string | number, qty: number) => {
     const item = cart.value.find((i) => i.id === id);
-    if (item) item.quantity = qty;
+    if (item) {
+      item.quantity = qty;
+      updateItem(item);
+    }
     saveCart();
   };
 
-  const clearCart = () => {
-    cart.value = [];
-    saveCart();
+  const clearCart = async() => {
+    try {
+      await clear();
+      cart.value = [];
+      toast.add({
+        title: "Cart has been cleared",
+        description: "Your cart has been emptied.",
+      });
+      saveCart();
+    } catch (error) {
+      toast.add({
+        title: "Failed to clear your cart",
+        description: "Something is wrong! try again later.",
+      });
+      console.error(error);
+    }
   };
 
   // save to local storage

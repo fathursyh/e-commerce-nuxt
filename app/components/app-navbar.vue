@@ -5,7 +5,9 @@
       <div class="flex justify-between items-center h-16">
         <!-- Logo -->
         <div class="flex items-center">
-          <h1 class="text-2xl font-bold text-gray-900">ShopHub</h1>
+          <NuxtLink to="/">
+            <h1 class="text-2xl font-bold text-gray-900">F-Commerce</h1>
+          </NuxtLink>
         </div>
 
         <!-- Desktop Navigation -->
