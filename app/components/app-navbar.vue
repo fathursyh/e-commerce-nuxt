@@ -20,10 +20,22 @@
 
         <!-- Right Side Icons -->
         <div class="flex items-center space-x-2">
-          <UButton icon="i-heroicons-magnifying-glass" variant="ghost" color="neutral" />
+          <UButton
+            icon="i-heroicons-magnifying-glass"
+            variant="ghost"
+            color="neutral"
+          />
           <UiCartDropdown />
-          <!-- User Dropdown -->
-          <UDropdownMenu :items="userMenuItems" :popper="{ placement: 'bottom-end' }">
+
+          <UButton v-if="!isAuthenticated" variant="solid" icon="i-heroicons-arrow-right-end-on-rectangle" to="/login" size="lg" :ui="{base: 'lg:w-24'}">
+            Login
+          </UButton>
+
+          <UDropdownMenu
+            v-else
+            :items="userMenuItems"
+            :popper="{ placement: 'bottom-end' }"
+          >
             <UButton icon="i-heroicons-user" color="neutral" variant="ghost" />
           </UDropdownMenu>
         </div>
@@ -33,31 +45,31 @@
 </template>
 
 <script setup lang="ts">
+  const { isAuthenticated } = useAuthState();
+  const { logoutUser } = useAuthActions();
   const userMenuItems = [
     [
       {
         label: "Profile",
         icon: "i-heroicons-user-circle",
-        click: () => navigateTo("/profile"),
+        onSelect: () => navigateTo("/profile"),
       },
       {
         label: "Orders",
         icon: "i-heroicons-shopping-bag",
-        click: () => navigateTo("/orders"),
+        onSelect: () => navigateTo("/orders"),
       },
       {
         label: "Settings",
         icon: "i-heroicons-cog-6-tooth",
-        click: () => navigateTo("/settings"),
+        onSelect: () => navigateTo("/settings"),
       },
     ],
     [
       {
         label: "Sign Out",
         icon: "i-heroicons-arrow-right-on-rectangle",
-        click: () => {
-          // Handle sign out
-        },
+        onSelect: () => logoutUser(),
       },
     ],
   ];

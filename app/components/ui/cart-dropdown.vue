@@ -11,7 +11,7 @@
     <UButton color="neutral" variant="ghost" class="relative">
       <UIcon name="i-heroicons-shopping-cart" class="w-5 h-5" />
       <ClientOnly>
-        <UBadge :label="totalItems.toString()" color="error" class="absolute -top-1 -right-1" />
+        <UBadge :label="totalItems.toString()" color="error" class="absolute -top-1 right-0" size="sm" />
       </ClientOnly>
     </UButton>
   </UDropdownMenu>

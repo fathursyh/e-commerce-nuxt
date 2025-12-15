@@ -1,7 +1,17 @@
+import type { User } from "./user";
+
 interface HttpResponse {
   success: boolean;
   message: string;
 };
+
+interface ErrorResponse {
+  status: number;
+  data: {
+    success: boolean;
+    message: string;
+  }
+}
 
 interface Pagination {
   total: number;
@@ -21,8 +31,14 @@ interface SingleResponse<T> extends HttpResponse {
   data: T;
 }
 
+interface AuthResponse extends HttpResponse {
+  data: {user: User}
+}
+
 export type {
   HttpResponse,
+  ErrorResponse,
   ArrayResponse,
   SingleResponse,
+  AuthResponse,
 };
