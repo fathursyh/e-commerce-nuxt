@@ -9,13 +9,18 @@
     <template #body>
       <h3>{{ text }}</h3>
     </template>
-    <template #footer="{close}">
+    <template #footer="{ close }">
       <div class="w-full flex gap-4 justify-end">
         <UButton variant="ghost" @click="close">Cancel</UButton>
         <UButton
           color="error"
           :ui="{ base: 'min-w-24 justify-center' }"
-          @click="$emit('on-confirm')"
+          @click="
+            () => {
+              $emit('on-confirm');
+              close();
+            }
+          "
           >{{ confirmText || "OK" }}</UButton
         >
       </div>

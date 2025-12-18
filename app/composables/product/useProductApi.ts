@@ -1,8 +1,18 @@
 export const useProductApi = () => {
     const { $api } = useNuxtApp();
     const productUrl = "/products";
-    const getProducts = () => $api(productUrl);
-    const getFeatured = () => $api<ArrayResponse<Product>>(productUrl +"/featured");
+
+    const products = {
+        key: "products",
+        call: async(query) => $api<ArrayResponse<Product>>(productUrl, {
+            query: query,
+        }),
+    } satisfies QueryModel;
+
+    const featured = {
+        key: "featured",
+        call: async() => $api<ArrayResponse<Product>>(productUrl +"/featured"),
+    } satisfies QueryModel;
     const getProductById = (id: string) => $api(productUrl + `/${id}`);
 
     // const createProduct = (data) =>
@@ -15,8 +25,8 @@ export const useProductApi = () => {
     //     $api(`/api/products/${id}`, { method: "DELETE" });
 
     return {
-        getProducts,
-        getFeatured,
+        products,
+        featured,
         getProductById,
         // createProduct,
         // updateProduct,

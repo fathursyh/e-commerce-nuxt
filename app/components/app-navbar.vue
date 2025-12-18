@@ -12,10 +12,12 @@
 
         <!-- Desktop Navigation -->
         <div class="hidden lg:flex items-center space-x-8">
-          <UButton variant="ghost" color="neutral">Shop</UButton>
-          <UButton variant="ghost" color="neutral">Categories</UButton>
-          <UButton variant="ghost" color="neutral">Deals</UButton>
-          <UButton variant="ghost" color="neutral">About</UButton>
+          <UButton variant="ghost" color="neutral" to="/products" active-color="success"
+            >Products</UButton
+          >
+          <UButton variant="ghost" color="neutral" active-color="success">Categories</UButton>
+          <UButton variant="ghost" color="neutral" active-color="success">Deals</UButton>
+          <UButton variant="ghost" color="neutral" active-color="success">About</UButton>
         </div>
 
         <!-- Right Side Icons -->
@@ -27,7 +29,14 @@
           />
           <UiCartDropdown />
 
-          <UButton v-if="!isAuthenticated" variant="solid" icon="i-heroicons-arrow-right-end-on-rectangle" to="/login" size="lg" :ui="{base: 'lg:w-24'}">
+          <UButton
+            v-if="!isAuthenticated"
+            variant="solid"
+            icon="i-heroicons-arrow-right-end-on-rectangle"
+            to="/login"
+            size="lg"
+            :ui="{ base: 'lg:w-24' }"
+          >
             Login
           </UButton>
 

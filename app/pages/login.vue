@@ -22,9 +22,7 @@
   ];
 
   const schema = z.object({
-    email: z
-    .string("Email is required")
-    .email(),
+    email: z.string("Email is required").email(),
     password: z
       .string("Password is required")
       .min(8, "Must be at least 8 characters"),
@@ -44,10 +42,23 @@
         :schema="schema"
         title="Login"
         description="Enter your credentials to access your account."
-        icon="i-lucide-user"
+        icon="i-heroicons-user"
         :fields="fields"
+        :loading="false"
+        :submit="{
+          label: 'Login',
+          variant: 'solid',
+        }"
         @submit="onSubmit"
       />
+      <p class="text-sm text-gray-500 text-center">
+        Have no accounts?
+        <NuxtLink
+          class="text-blue-500 font-semibold hover:underline"
+          to="/register"
+          >Register Here</NuxtLink
+        >
+      </p>
     </UPageCard>
   </div>
 </template>

@@ -20,7 +20,7 @@ export const useCart = () => {
         existing.quantity += item.quantity ?? 1;
         toast.add({
           title: "Item has been updated!",
-          description: item.product?.name + "'s quantity has been updated successfully.",
+          description: item.name + "'s quantity has been updated successfully.",
         });
       } else {
         const { data } = await addItem(item.product_id.toString(), 1);
@@ -28,7 +28,7 @@ export const useCart = () => {
         cart.value.push(...data.items);
         toast.add({
           title: "Item has been added!",
-          description: item.product?.name + " has been added successfully to your cart.",
+          description: item.name + " has been added successfully to your cart.",
         });
       }
       saveCart();
@@ -47,7 +47,7 @@ export const useCart = () => {
     saveCart();
     toast.add({
       title: "Item has been removed!",
-      description: item.product?.name + " has been removed from your cart.",
+      description: item.name + " has been removed from your cart.",
     });
   };
 

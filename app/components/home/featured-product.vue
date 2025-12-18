@@ -28,11 +28,11 @@
 <script setup lang="ts">
   import { useQuery } from "@tanstack/vue-query";
 
-  const { getFeatured } = useProductApi();
+  const { featured } = useProductApi();
     const {
       data: featuredProducts,
        suspense,
        isError,
-    } = useQuery({ queryKey: ["featured"], queryFn: getFeatured });
+    } = useQuery({ queryKey: [featured.key], queryFn: featured.call });
     await suspense();
 </script>

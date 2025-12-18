@@ -15,7 +15,7 @@
             premium items.
           </p>
           <div class="flex gap-4">
-            <UButton size="lg" color="neutral"> Shop Now </UButton>
+            <UButton size="lg" color="neutral" to="/products"> Shop Now </UButton>
             <UButton size="lg" color="neutral" variant="outline">
               View Deals
             </UButton>
