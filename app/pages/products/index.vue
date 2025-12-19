@@ -5,8 +5,7 @@
         class="flex flex-col md:flex-row justify-between items-center gap-4"
       >
         <h1 class="text-3xl font-bold">Our Products</h1>
-
-        <ProductsSearchFilters @filter-change="onFilterChange" />
+        <ProductsSearchFilters />
       </section>
 
       <section>
@@ -34,6 +33,14 @@
               <UiProductCard :product-item="product" />
             </template>
           </div>
+          <div class="mt-8 w-full grid place-items-center">
+            <UPagination
+              :page="productsData.pagination.current_page"
+              :total="productsData.pagination.total"
+              :items-per-page="productsData.pagination.per_page"
+              show-controls
+            />
+          </div>
         </div>
 
         <div v-else class="flex flex-col items-center justify-center py-20">
@@ -51,30 +58,24 @@
 </template>
 
 <script setup lang="ts">
-  import { useQuery } from "@tanstack/vue-query";
-  const { products } = useProductApi();
-  const { query } = useRoute();
-  const queryParams = ref(query);
+  const { queryParams } = useProductState();
+  const { fetchProducts } = useProductActions();
+
   const {
     data: productsData,
     suspense,
     isError,
     isRefetching,
     refetch,
-  } = useQuery({
-    queryKey: [products.key, queryParams],
-    queryFn: () => products.call(queryParams.value),
-    staleTime: 1000 * 60 * 10,
-  });
+  } = fetchProducts();
   await suspense();
 
-  const onFilterChange = (value: { search: string; category: string }) => {
-    if (
-      queryParams.value.category === value.category &&
-      queryParams.value.search === value.search
-    )
-      return;
-    queryParams.value = value;
+  onBeforeRouteUpdate(({ query }) => {
+    queryParams.value = query;
     refetch();
-  };
+  });
+
+  onBeforeRouteLeave(() => {
+    queryParams.value = null;
+  });
 </script>

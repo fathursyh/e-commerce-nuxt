@@ -12,6 +12,8 @@
       class="w-48"
       :items="data?.data.map((item) => ({ id: item.id, label: item.name }))"
       value-key="id"
+      selected-icon="i-heroicons-check"
+      trailing-icon="i-heroicons-chevron-down"
     />
     <UButton
       color="neutral"
@@ -35,8 +37,7 @@
   await suspense();
 
   const router = useRouter();
-  const emit = defineEmits(["filter-change"]);
-  const query = useRoute().query;
+  const { query } = useRoute();
   const search = ref(query.search);
 
   const selectedCategory = ref(
@@ -44,14 +45,13 @@
   );
 
   const updateFilter = useDebounce(() => {
-    const query = {
+    const queryParams = {
       search: search.value || undefined,
       category: selectedCategory.value || undefined,
     };
-    emit("filter-change", query);
     router.replace({
       path: "/products",
-      query,
+      query: queryParams,
     });
   }, 800);
 
@@ -60,10 +60,12 @@
       path: "/products",
       query: {},
     });
-    selectedCategory.value = null;
-    search.value = "";
-    emit("filter-change", {});
   };
 
   watch([search, selectedCategory], updateFilter);
+
+  onBeforeRouteUpdate(({ query }) => {
+    if (query.search === undefined) search.value = undefined;
+    if (query.category === undefined) selectedCategory.value = null;
+  });
 </script>

@@ -3,7 +3,7 @@
   import type { FormSubmitEvent, AuthFormField } from "@nuxt/ui";
 
   const { registerUser } = useAuthActions();
-
+  const { mutate, isPending } = registerUser();
   const fields: AuthFormField[] = [
     {
       name: "name",
@@ -21,7 +21,7 @@
     },
     {
       name: "phone",
-      type: "number",
+      type: "text",
       label: "Phone Number",
       placeholder: "Enter your phone number",
       required: true,
@@ -42,21 +42,28 @@
     },
   ];
 
-  const schema = z.object({
-    name: z.string("Fullname is required").min(2, "Name is too short"),
-    email: z.string("Email is required").email("Invalid email address"),
-    phone: z.string("Phone number is required"),
-    password: z.string("Password is required").min(8, "Must be at least 8 characters"),
-    confirmPassword: z.string("Confirm password is requred"),
-  }).refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
+  const schema = z
+    .object({
+      name: z.string("Fullname is required").min(2, "Name is too short"),
+      email: z.string("Email is required").email("Invalid email address"),
+      phone: z.string("Phone number is required"),
+      password: z
+        .string("Password is required")
+        .min(8, "Must be at least 8 characters"),
+      confirmPassword: z.string("Confirm password is requred"),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: "Passwords do not match",
+      path: ["confirmPassword"],
+    });
 
   type Schema = z.output<typeof schema>;
 
   function onSubmit(payload: FormSubmitEvent<Schema>) {
-    registerUser({ ...payload.data, password_confirmation: payload.data.confirmPassword });
+    mutate({
+      ...payload.data,
+      password_confirmation: payload.data.confirmPassword,
+    });
   }
 </script>
 
@@ -72,12 +79,17 @@
         :submit="{
           label: 'Register',
           variant: 'solid',
+          disabled: isPending,
         }"
+        :disabled="isPending"
         @submit="onSubmit"
       />
       <p class="text-sm text-gray-500 text-center">
         Already have an account?
-        <NuxtLink class="text-blue-500 font-semibold hover:underline" to="/login">
+        <NuxtLink
+          class="text-blue-500 font-semibold hover:underline"
+          to="/login"
+        >
           Login Here
         </NuxtLink>
       </p>

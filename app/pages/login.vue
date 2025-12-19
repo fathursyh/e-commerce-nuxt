@@ -3,12 +3,13 @@
   import type { FormSubmitEvent, AuthFormField } from "@nuxt/ui";
 
   const { loginUser } = useAuthActions();
-
+  const { mutate, isPending } = loginUser();
   const fields: AuthFormField[] = [
     {
       name: "email",
       type: "email",
       label: "Email",
+      autocomplete: "on",
       placeholder: "Enter your email",
       required: true,
     },
@@ -27,11 +28,9 @@
       .string("Password is required")
       .min(8, "Must be at least 8 characters"),
   });
-
   type Schema = z.output<typeof schema>;
-
   function onSubmit(payload: FormSubmitEvent<Schema>) {
-    loginUser(payload.data);
+    mutate(payload.data);
   }
 </script>
 
@@ -48,7 +47,9 @@
         :submit="{
           label: 'Login',
           variant: 'solid',
+          disabled: isPending,
         }"
+        :disabled="isPending"
         @submit="onSubmit"
       />
       <p class="text-sm text-gray-500 text-center">

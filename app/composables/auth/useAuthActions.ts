@@ -1,3 +1,4 @@
+import { useMutation } from "@tanstack/vue-query";
 import type { ErrorResponse } from "~~/shared/types/response";
 
 export const useAuthActions = () => {
@@ -19,46 +20,49 @@ export const useAuthActions = () => {
         }
     };
 
-    const registerUser = async(payload: RegisterPayload) => {
-        try {
-            const res = await api.register.call(payload);
-            user.value = res.data.user;
-
-            toast.add({
-                title: "Registration Success",
-                description: "New account been registered in successfully!",
-                color: "success",
-            });
-            return navigateTo("/");
-        } catch (error) {
-            toast.add({
-                title: "Registration Failed",
-                description: getErrorMessage(error as ErrorResponse),
-                color: "error",
-            });
-            throw error;
-        }
+    const registerUser = () => {
+        return useMutation({
+            mutationFn: (payload: RegisterPayload) =>
+                api.register.call(payload),
+            onSuccess: (res) => {
+                user.value = res.data.user;
+                toast.add({
+                    title: "Registration Success",
+                    description: "New account been registered in successfully!",
+                    color: "success",
+                });
+                return navigateTo("/");
+            },
+            onError: (error: ErrorResponse) => {
+                toast.add({
+                    title: "Registration Failed",
+                    description: getErrorMessage(error),
+                    color: "error",
+                });
+            },
+        });
     };
 
-    const loginUser = async(payload: LoginPayload) => {
-        try {
-            const res = await api.login.call(payload);
-            user.value = res.data.user;
-
-            toast.add({
-                title: "Login Success",
-                description: "You have been logged in successfully!",
-                color: "success",
-            });
-            return navigateTo("/");
-        } catch (error) {
-            toast.add({
-                title: "Login Failed",
-                description: getErrorMessage(error as ErrorResponse),
-                color: "error",
-            });
-            throw error;
-        }
+    const loginUser = () => {
+        return useMutation({
+            mutationFn: (payload: LoginPayload) => api.login.call(payload),
+            onSuccess: ({ data }) => {
+                user.value = data.user;
+                toast.add({
+                    title: "Login Success",
+                    description: "You have been logged in successfully!",
+                    color: "success",
+                });
+                return navigateTo("/");
+            },
+            onError: (error: ErrorResponse) => {
+                toast.add({
+                    title: "Login Failed",
+                    description: getErrorMessage(error),
+                    color: "error",
+                });
+            },
+        });
     };
 
     const logoutUser = async() => {
