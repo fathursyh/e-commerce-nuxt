@@ -27,13 +27,9 @@
 </template>
 
 <script setup lang="ts">
-  import { useQuery } from "@tanstack/vue-query";
-  const { categories } = useCategoryApi();
-  const { data, suspense } = useQuery({
-    queryKey: [categories.key],
-    staleTime: 1000 * 60 * 60,
-    queryFn: categories.call,
-  });
+  const { getAllCategories } = useCategoryActions();
+
+  const { data, suspense } = getAllCategories();
   await suspense();
 
   const router = useRouter();
@@ -66,6 +62,8 @@
 
   onBeforeRouteUpdate(({ query }) => {
     if (query.search === undefined) search.value = undefined;
+    else search.value = query.search;
     if (query.category === undefined) selectedCategory.value = null;
+    else selectedCategory.value = +query.category!;
   });
 </script>

@@ -5,7 +5,7 @@ export const useProductActions = () => {
     const { queryParams } = useProductState();
 
     const fetchFeatured = () => {
-        return useQuery({ queryKey: [api.featured.key], queryFn: api.featured.call });
+        return useQuery({ queryKey: [api.featured.key], queryFn: api.featured.call, staleTime: 1000 * 60 * 30 });
     };
 
     const fetchProducts = () => {

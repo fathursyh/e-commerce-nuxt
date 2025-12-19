@@ -12,23 +12,28 @@
 
         <!-- Desktop Navigation -->
         <div class="hidden lg:flex items-center space-x-8">
-          <UButton variant="ghost" color="neutral" to="/products" active-color="success"
+          <UButton
+            variant="ghost"
+            color="neutral"
+            to="/products"
+            active-color="success"
             >Products</UButton
           >
-          <UButton variant="ghost" color="neutral" active-color="success">Categories</UButton>
-          <UButton variant="ghost" color="neutral" active-color="success">Deals</UButton>
-          <UButton variant="ghost" color="neutral" active-color="success">About</UButton>
+          <UButton variant="ghost" color="neutral" active-color="success"
+            >Categories</UButton
+          >
+          <UButton variant="ghost" color="neutral" active-color="success"
+            >Deals</UButton
+          >
+          <UButton variant="ghost" color="neutral" active-color="success"
+            >About</UButton
+          >
         </div>
 
         <!-- Right Side Icons -->
         <div class="flex items-center space-x-2">
-          <UButton
-            icon="i-heroicons-magnifying-glass"
-            variant="ghost"
-            color="neutral"
-          />
+          <LazyProductsNavbarProductSearch hydrate-on-idle />
           <UiCartDropdown />
-
           <UButton
             v-if="!isAuthenticated"
             variant="solid"
@@ -56,6 +61,7 @@
 <script setup lang="ts">
   const { isAuthenticated } = useAuthState();
   const { logoutUser } = useAuthActions();
+
   const userMenuItems = [
     [
       {
