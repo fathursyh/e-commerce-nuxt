@@ -31,6 +31,7 @@ export interface Category {
   description: string | null;
   image: string | null;
   parent_id: number | null;
+  products_count?: number;
   is_active: boolean;
   sort_order: number;
   created_at: string;

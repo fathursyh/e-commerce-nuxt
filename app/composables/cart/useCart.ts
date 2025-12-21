@@ -47,7 +47,7 @@ export const useCart = () => {
     saveCart();
     toast.add({
       title: "Item has been removed!",
-      description: item.name + " has been removed from your cart.",
+      description: item.product?.name + " has been removed from your cart.",
     });
   };
 

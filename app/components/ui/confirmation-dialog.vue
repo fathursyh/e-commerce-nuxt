@@ -11,7 +11,7 @@
     </template>
     <template #footer="{ close }">
       <div class="w-full flex gap-4 justify-end">
-        <UButton variant="ghost" @click="close">Cancel</UButton>
+        <UButton variant="ghost" color="neutral" @click="close">Cancel</UButton>
         <UButton
           color="error"
           :ui="{ base: 'min-w-24 justify-center' }"

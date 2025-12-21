@@ -15,7 +15,7 @@
           confirm-text="Clear"
           @on-confirm="clearCart()"
         >
-          <UButton variant="ghost">Clear Cart</UButton>
+          <UButton variant="ghost" color="error" :disabled="cart.length === 0">Clear Cart</UButton>
         </LazyUiConfirmationDialog>
       </div>
     </div>

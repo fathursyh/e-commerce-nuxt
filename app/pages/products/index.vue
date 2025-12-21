@@ -4,7 +4,10 @@
       <section
         class="flex flex-col md:flex-row justify-between items-center gap-4"
       >
-        <h1 class="text-3xl font-bold">Our Products</h1>
+        <div>
+          <h1 class="text-3xl font-bold">Our Products</h1>
+          <p class="text-gray-500 mt-1">Browse our top quality products</p>
+        </div>
         <ProductsSearchFilters />
       </section>
 

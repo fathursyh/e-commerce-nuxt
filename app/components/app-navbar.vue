@@ -4,14 +4,64 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
         <!-- Logo -->
-        <div class="flex items-center">
+        <div class="flex items-center gap-1">
+          <!-- mobile -->
+          <UDrawer v-model:open="drawerOpen" direction="left">
+            <UButton
+              color="neutral"
+              variant="ghost"
+              icon="i-heroicons-bars-3"
+              class="md:hidden"
+            />
+
+            <template #body>
+              <menu class="w-40 h-full flex flex-col gap-2">
+                <UButton
+                  as="li"
+                  variant="ghost"
+                  color="neutral"
+                  active-color="success"
+                  to="/products"
+                  @click="closeDrawer()"
+                  >Products</UButton
+                >
+                <UButton
+                  as="li"
+                  variant="ghost"
+                  color="neutral"
+                  active-color="success"
+                  to="/categories"
+                  @click="closeDrawer()"
+                  >Categories</UButton
+                >
+                <UButton
+                  as="li"
+                  variant="ghost"
+                  color="neutral"
+                  active-color="success"
+                  to="/"
+                  @click="closeDrawer()"
+                  >Deals</UButton
+                >
+                <UButton
+                  as="li"
+                  variant="ghost"
+                  color="neutral"
+                  active-color="success"
+                  to="/"
+                  @click="closeDrawer()"
+                  >About</UButton
+                >
+              </menu>
+            </template>
+          </UDrawer>
           <NuxtLink to="/">
-            <h1 class="text-2xl font-bold text-gray-900">F-Commerce</h1>
+            <h1 class="text-xl font-bold text-gray-900">F-Commerce</h1>
           </NuxtLink>
         </div>
 
         <!-- Desktop Navigation -->
-        <div class="hidden lg:flex items-center space-x-8">
+        <div class="hidden md:flex items-center space-x-8">
           <UButton
             variant="ghost"
             color="neutral"
@@ -19,7 +69,11 @@
             active-color="success"
             >Products</UButton
           >
-          <UButton variant="ghost" color="neutral" active-color="success"
+          <UButton
+            variant="ghost"
+            color="neutral"
+            active-color="success"
+            to="/categories"
             >Categories</UButton
           >
           <UButton variant="ghost" color="neutral" active-color="success"
@@ -61,6 +115,9 @@
 <script setup lang="ts">
   const { isAuthenticated } = useAuthState();
   const { logoutUser } = useAuthActions();
+
+  const drawerOpen = ref(false);
+  const closeDrawer = () => drawerOpen.value = false;
 
   const userMenuItems = [
     [

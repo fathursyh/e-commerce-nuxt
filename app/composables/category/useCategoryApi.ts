@@ -1,11 +1,12 @@
-
 export const useCategoryApi = () => {
     const { $api } = useNuxtApp();
     const categoryUrl = "/categories";
 
     const categories = {
         key: "categories",
-        call: () => $api<SingleResponse<Category[]>>(categoryUrl),
+        call: (query) => $api<ArrayResponse<Category>>(categoryUrl, {
+            query: query,
+        }),
     } satisfies QueryModel;
 
     return {
