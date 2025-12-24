@@ -10,13 +10,18 @@
           <UIcon name="i-heroicons-shopping-bag" class="w-8 h-8 text-primary" />
           <h1 class="text-3xl font-bold text-gray-900">Shopping Cart</h1>
         </div>
-        <LazyUiConfirmationDialog
-          text="Clear all cart items?"
-          confirm-text="Clear"
-          @on-confirm="clearCart()"
-        >
-          <UButton variant="ghost" color="error" :disabled="cart.length === 0">Clear Cart</UButton>
-        </LazyUiConfirmationDialog>
+        <!-- <CartClearButton /> -->
+        <ClientOnly>
+          <LazyUiConfirmationDialog
+            text="Clear all cart items?"
+            confirm-text="Clear"
+            @on-confirm="clearCart()"
+          >
+            <UButton variant="ghost" color="error" :disabled="cart.length === 0"
+              >Clear Cart</UButton
+            >
+          </LazyUiConfirmationDialog>
+        </ClientOnly>
       </div>
     </div>
     <ClientOnly>
@@ -35,7 +40,9 @@
               Your cart is empty
             </h2>
             <p class="text-gray-600">Add some items to get started</p>
-            <UButton size="lg" class="mt-4" to="/products">Continue Shopping</UButton>
+            <UButton size="lg" class="mt-4" to="/products"
+              >Continue Shopping</UButton
+            >
           </div>
         </UCard>
 
@@ -91,10 +98,20 @@
             </UCard>
             <UCard class="mt-4">
               <div class="space-y-3">
-                <UInput
-                  placeholder="Enter promo code"
-                  icon="i-heroicons-ticket"
-                />
+                <div class="flex gap-2">
+                  <UInput
+                    placeholder="Enter promo code"
+                    icon="i-heroicons-ticket"
+                    class="flex-2"
+                  />
+                  <UButton
+                    disabled
+                    class="flex-1 line-clamp-1"
+                    variant="subtle"
+                    color="neutral"
+                    >Saturday Promo</UButton
+                  >
+                </div>
                 <UButton block variant="outline">Apply Code</UButton>
               </div>
             </UCard>

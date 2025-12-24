@@ -24,4 +24,7 @@ export default defineNuxtConfig({
       "~/composables/**",
     ],
   },
+  experimental: {
+    componentIslands: true,
+  },
 });

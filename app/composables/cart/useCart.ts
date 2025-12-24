@@ -61,6 +61,7 @@ export const useCart = () => {
   };
 
   const clearCart = async() => {
+    if (cart.value.length === 0) return;
     try {
       await clear();
       cart.value = [];

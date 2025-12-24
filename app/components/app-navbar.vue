@@ -119,7 +119,6 @@
 <script setup lang="ts">
   const { isAuthenticated } = useAuthState();
   const { logoutUser } = useAuthActions();
-
   const drawerOpen = ref(false);
   const closeDrawer = () => (drawerOpen.value = false);
 
