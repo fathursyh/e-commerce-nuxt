@@ -11,7 +11,10 @@ export const useProductActions = () => {
     const fetchProducts = () => {
         return useQuery({
             queryKey: [queryParams.value, api.products.key],
-            queryFn: () => api.products.call(queryParams.value),
+            queryFn: () => api.products.call({
+                ...queryParams.value,
+                with_reviews: true,
+            }),
             staleTime: 1000 * 60 * 10,
         });
     };

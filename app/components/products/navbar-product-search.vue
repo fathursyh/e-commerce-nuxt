@@ -1,5 +1,6 @@
 <template>
   <UModal
+  close-icon="i-heroicons-x-mark"
     title="Search Products"
     :close="{
       color: 'neutral',
@@ -59,10 +60,10 @@
 <script setup lang="ts">
   import { useQueryClient } from "@tanstack/vue-query";
 
-  const { getAllCategories } = useCategoryActions();
+  const { getRandom } = useCategoryActions();
   const router = useRouter();
   const search = ref("");
-  const { data: categories, suspense } = getAllCategories();
+  const { data: categories, suspense } = getRandom();
   await suspense();
 
   const queryClient = useQueryClient();

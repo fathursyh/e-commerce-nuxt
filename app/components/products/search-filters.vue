@@ -28,14 +28,12 @@
 
 <script setup lang="ts">
   const { getAllCategories } = useCategoryActions();
-
   const { data, suspense } = getAllCategories();
   await suspense();
 
   const router = useRouter();
   const { query } = useRoute();
   const search = ref(query.search);
-
   const selectedCategory = ref(
     data.value?.data.find((item) => item.id == +query.category!)?.id || null,
   );

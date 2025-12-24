@@ -48,7 +48,7 @@
                   variant="ghost"
                   color="neutral"
                   active-color="success"
-                  to="/"
+                  to="/about"
                   @click="closeDrawer()"
                   >About</UButton
                 >
@@ -79,7 +79,11 @@
           <UButton variant="ghost" color="neutral" active-color="success"
             >Deals</UButton
           >
-          <UButton variant="ghost" color="neutral" active-color="success"
+          <UButton
+            variant="ghost"
+            color="neutral"
+            active-color="success"
+            to="/about"
             >About</UButton
           >
         </div>
@@ -117,7 +121,7 @@
   const { logoutUser } = useAuthActions();
 
   const drawerOpen = ref(false);
-  const closeDrawer = () => drawerOpen.value = false;
+  const closeDrawer = () => (drawerOpen.value = false);
 
   const userMenuItems = [
     [

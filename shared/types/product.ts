@@ -19,6 +19,8 @@ export interface Product {
     [key: string]: unknown;
   };
   category: Category | null;
+  reviews_count?: number;
+  average_rating?: number;
   images: ProductImage[];
   created_at: string;
   updated_at: string;
@@ -31,6 +33,7 @@ export interface Category {
   description: string | null;
   image: string | null;
   parent_id: number | null;
+  products: Product[],
   products_count?: number;
   is_active: boolean;
   sort_order: number;

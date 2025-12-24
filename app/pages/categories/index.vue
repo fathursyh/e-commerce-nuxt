@@ -4,7 +4,7 @@
       <section
         class="flex flex-col md:flex-row justify-between items-center gap-4"
       >
-        <div>
+        <div class="w-full md:w-fit">
           <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
             Categories
           </h1>
@@ -60,13 +60,14 @@
         </div>
 
         <div
-          v-else-if="categories?.data.length! > 0"
+          v-else-if="categories?.data"
           class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
           <NuxtLink
-            v-for="category in categories?.data"
+            v-for="category in categories?.data.filter(item => item.products_count !== 0)"
             :key="category.id"
             class="group"
+            :to="`/categories/${category.slug}`"
           >
             <UCard
               class="hover:ring-2 hover:ring-primary-500 transition-all duration-200 cursor-pointer overflow-hidden"

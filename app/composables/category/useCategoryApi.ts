@@ -4,12 +4,22 @@ export const useCategoryApi = () => {
 
     const categories = {
         key: "categories",
-        call: (query) => $api<ArrayResponse<Category>>(categoryUrl, {
+        call: async(query) => $api<ArrayResponse<Category>>(categoryUrl, {
             query: query,
+        }),
+    } satisfies QueryModel;
+
+    const detail = {
+        key: "detail",
+        call: async(slug) => $api<SingleResponse<Category>>(categoryUrl + `/${slug}`, {
+            query: {
+                with_products: true,
+            },
         }),
     } satisfies QueryModel;
 
     return {
         categories,
+        detail,
     };
 };

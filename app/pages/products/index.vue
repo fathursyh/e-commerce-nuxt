@@ -4,7 +4,7 @@
       <section
         class="flex flex-col md:flex-row justify-between items-center gap-4"
       >
-        <div>
+        <div class="w-full md:w-fit">
           <h1 class="text-3xl font-bold">Our Products</h1>
           <p class="text-gray-500 mt-1">Browse our top quality products</p>
         </div>
@@ -42,6 +42,7 @@
               :total="productsData.pagination.total"
               :items-per-page="productsData.pagination.per_page"
               show-controls
+              :to="to"
             />
           </div>
         </div>
@@ -81,4 +82,12 @@
   onBeforeRouteLeave(() => {
     queryParams.value = null;
   });
+
+  function to(page: number) {
+    return {
+      query: {
+        page,
+      },
+    };
+  }
 </script>
