@@ -43,6 +43,7 @@
               :items-per-page="productsData.pagination.per_page"
               show-controls
               :to="to"
+              @update:page="backToTop()"
             />
           </div>
         </div>
@@ -64,7 +65,6 @@
 <script setup lang="ts">
   const { queryParams } = useProductState();
   const { fetchProducts } = useProductActions();
-
   const {
     data: productsData,
     suspense,
@@ -73,6 +73,8 @@
     refetch,
   } = fetchProducts();
   await suspense();
+
+  const backToTop = () => window.scrollTo({ top: 0, left: 0 });
 
   onBeforeRouteUpdate(({ query }) => {
     queryParams.value = query;

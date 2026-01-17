@@ -27,15 +27,15 @@ export const useAuthActions = () => {
             onSuccess: (res) => {
                 user.value = res.data.user;
                 toast.add({
-                    title: "Registration Success",
-                    description: "New account been registered in successfully!",
+                    title: "Registration success!",
+                    description: "New account has been registered in successfully.",
                     color: "success",
                 });
                 return navigateTo("/");
             },
             onError: (error: ErrorResponse) => {
                 toast.add({
-                    title: "Registration Failed",
+                    title: "Registration failed!",
                     description: getErrorMessage(error),
                     color: "error",
                 });
@@ -49,15 +49,15 @@ export const useAuthActions = () => {
             onSuccess: ({ data }) => {
                 user.value = data.user;
                 toast.add({
-                    title: "Login Success",
-                    description: "You have been logged in successfully!",
+                    title: "Login success!",
+                    description: "You have been logged in successfully.",
                     color: "success",
                 });
                 return navigateTo("/");
             },
             onError: (error: ErrorResponse) => {
                 toast.add({
-                    title: "Login Failed",
+                    title: "Login failed!",
                     description: getErrorMessage(error),
                     color: "error",
                 });
@@ -69,8 +69,8 @@ export const useAuthActions = () => {
         try {
             await api.logout.call();
             toast.add({
-                title: "Logout Success",
-                description: "You have been logged out successfully!",
+                title: "Logout success!",
+                description: "You have been logged out successfully.",
                 color: "success",
             });
         } catch (error) {

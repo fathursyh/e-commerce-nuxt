@@ -68,12 +68,12 @@
 
                 <div class="flex justify-between text-gray-600">
                   <span>Shipping</span>
-                  <!-- <span>${{ shipping.toFixed(2) }}</span> -->
+                  <span>TBD</span>
                 </div>
 
                 <div class="flex justify-between text-gray-600">
                   <span>Tax (8%)</span>
-                  <!-- <span>${{ tax.toFixed(2) }}</span> -->
+                  <span>${{ tax.toFixed(2) }}</span>
                 </div>
                 <div
                   class="flex justify-between text-xl font-bold text-gray-900"
@@ -87,6 +87,7 @@
                   size="lg"
                   trailing-icon="i-heroicons-arrow-right"
                   class="mt-6"
+                  @click="checkOut()"
                 >
                   Proceed to Checkout
                 </UButton>
@@ -124,5 +125,5 @@
 
 <script setup>
   const { cart } = useCartState();
-  const { totalPrice, clearCart } = useCart();
+  const { totalPrice, tax, clearCart, checkOut } = useCart();
 </script>

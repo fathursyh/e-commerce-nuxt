@@ -125,9 +125,9 @@
   const userMenuItems = [
     [
       {
-        label: "Profile",
+        label: "Dashboard",
         icon: "i-heroicons-user-circle",
-        onSelect: () => navigateTo("/profile"),
+        onSelect: () => navigateTo("/admin"),
       },
       {
         label: "Orders",

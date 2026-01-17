@@ -27,4 +27,9 @@ export default defineNuxtConfig({
   experimental: {
     componentIslands: true,
   },
+  routeRules: {
+    "/products/**": { swr: 3600 },
+    "/admin/**": { ssr: false },
+    "/about": { prerender: true, static: true },
+  },
 });

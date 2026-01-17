@@ -6,14 +6,16 @@
       <NuxtLink class="relative" to="/">
         <NuxtImg
           v-if="productItem.images"
-          :src="`${useRuntimeConfig().public.backend}/${productItem.images[0]?.image_path}`"
+          :src="`${useRuntimeConfig().public.backend}/${
+            productItem.images[0]?.image_path
+          }`"
           :alt="productItem.name"
           class="w-full h-64 object-cover rounded-t-lg"
         />
         <div v-else class="w-full h-64 bg-muted grid place-items-center">
           <p class="text-muted">No Product Image.</p>
         </div>
-        <UBadge color="primary" class="absolute top-3 left-3" />
+        <UBadge v-if="itemInCart" color="primary" class="absolute top-3 left-3 appear min-h-6 min-w-6 grid place-items-center">{{ itemInCart }}</UBadge>
       </NuxtLink>
     </template>
 
@@ -96,8 +98,26 @@
 </template>
 
 <script setup lang="ts">
-  defineProps<{
+  const props = defineProps<{
     productItem: Product;
   }>();
+
+  const { cart } = useCartState();
   const { addToCart } = useCart();
+
+  const itemInCart = computed(() => cart.value.find((item) => item.product_id === props.productItem.id)?.quantity);
 </script>
+
+<style>
+  .appear {
+    animation: fade-in 0.3s ease-out forwards;
+  }
+
+  @keyframes fade-in {
+    from {
+      scale: 0.5;
+      opacity: 0;
+      rotate: 180deg;
+    }
+  }
+</style>
