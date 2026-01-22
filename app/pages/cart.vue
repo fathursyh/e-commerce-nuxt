@@ -63,7 +63,12 @@
               <div class="space-y-4">
                 <div class="flex justify-between text-gray-600">
                   <span>Subtotal</span>
-                  <span>${{ totalPrice.toFixed(2) }}</span>
+                  <span
+                    >${{
+                      data?.data?.estimates.subtotal.toFixed(2) ??
+                      totalPrice.toFixed(2)
+                    }}</span
+                  >
                 </div>
 
                 <div class="flex justify-between text-gray-600">
@@ -73,7 +78,9 @@
 
                 <div class="flex justify-between text-gray-600">
                   <span>Tax (8%)</span>
-                  <span>${{ tax.toFixed(2) }}</span>
+                  <span>
+                    ${{ data?.data?.estimates.tax.toFixed(2) ?? tax.toFixed(2) }}
+                  </span>
                 </div>
                 <div
                   class="flex justify-between text-xl font-bold text-gray-900"
@@ -87,12 +94,12 @@
                   size="lg"
                   trailing-icon="i-heroicons-arrow-right"
                   class="mt-6"
-                  @click="checkOut()"
+                  @click="checkOutOrder()"
                 >
                   Proceed to Checkout
                 </UButton>
 
-                <UButton block variant="outline" color="gray">
+                <UButton block variant="outline" color="neutral">
                   Continue Shopping
                 </UButton>
               </div>
@@ -120,10 +127,53 @@
         </div>
       </div>
     </ClientOnly>
+    <UModal v-model:open="shippingDialog" title="Shipping Detail" :dismissible="false">
+      <template #body>
+        <UiShippingForm />
+      </template>
+    </UModal>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
   const { cart } = useCartState();
-  const { totalPrice, tax, clearCart, checkOut } = useCart();
+  const { totalPrice, tax, clearCart } = useCart();
+  const { initCheckout, checkOut } = useOrderActions();
+  const { isAuthenticated } = useAuthState();
+  const toast = useToast();
+  const shippingDialog = ref(false);
+
+  const { data, suspense } = initCheckout();
+  await suspense();
+
+  const { mutate } = checkOut({
+    items: cart.value.map((cartItem) => ({
+      product_id: cartItem.product_id,
+      quantity: cartItem.quantity,
+    })),
+    billing_address_id: 1,
+    shipping_address_id: 1,
+    payment_method: "bank_transfer",
+  });
+
+  const checkOutOrder = () => {
+    if (!isAuthenticated.value) {
+      useRouter().push("/login");
+      toast.add({
+        title: "Not Authenticated",
+        description: "Sign in to your account to proceed your checkout.",
+      });
+      return;
+    }
+    if (!data.value?.data.shipping_address) {
+      shippingDialog.value = true;
+      toast.add({
+        title: "Shipping Address Required",
+        description:
+          "Please fill your shipping address to proceed your checkout.",
+      });
+      return;
+    }
+    mutate();
+  };
 </script>

@@ -1,5 +1,4 @@
 export const useCart = () => {
-  const { isAuthenticated } = useAuthState();
   const { cart } = useCartState();
   const { addItem, updateItem, removeItem, clearCart: clear } = useCartApi();
   const toast = useToast();
@@ -89,17 +88,6 @@ export const useCart = () => {
     }
   };
 
-  const checkOut = () => {
-    if (!isAuthenticated.value) {
-      useRouter().push("/login");
-      toast.add({
-        title: "Not authenticated",
-        description: "Sign in to your account to proceed your checkout.",
-      });
-      return;
-    }
-  };
-
   return {
     totalItems,
     totalPrice,
@@ -108,6 +96,5 @@ export const useCart = () => {
     removeFromCart,
     updateQty,
     clearCart,
-    checkOut,
   };
 };
