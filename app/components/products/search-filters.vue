@@ -10,7 +10,7 @@
       v-model="selectedCategory as number"
       placeholder="Filter by Category"
       class="w-48"
-      :items="data?.data.map((item) => ({ id: item.id, label: item.name }))"
+      :items="categoryOptions"
       value-key="id"
       selected-icon="i-heroicons-check"
       trailing-icon="i-heroicons-chevron-down"
@@ -27,13 +27,24 @@
 </template>
 
 <script setup lang="ts">
-  const { getAllCategories } = useCategoryActions();
-  const { data, suspense } = getAllCategories();
-  await suspense();
+  import type { SelectItem } from "@nuxt/ui";
 
+  const { getAllCategories } = useCategoryActions();
+  const { data, suspense } = getAllCategories({ with_products_count: true });
+  await suspense();
   const router = useRouter();
   const { query } = useRoute();
   const search = ref(query.search);
+
+  const categoryOptions = computed<SelectItem[] | undefined>(() =>
+    data.value?.data.reduce<SelectItem[]>((acc, item) => {
+      if (item.products_count! > 0) {
+        acc.push({ id: item.id, label: item.name });
+      }
+      return acc;
+    }, []),
+  );
+
   const selectedCategory = ref(
     data.value?.data.find((item) => item.id == +query.category!)?.id || null,
   );

@@ -1,5 +1,5 @@
 <template>
-    <p>main dashboard</p>
+    <p>notifications</p>
 </template>
 
 <script setup lang="ts">

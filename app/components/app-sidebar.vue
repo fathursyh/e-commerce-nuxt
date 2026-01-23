@@ -4,48 +4,49 @@
   const items: NavigationMenuItem[][] = [
     [
       {
-        label: "bars-3",
+        label: "Dashboard",
         icon: "i-heroicons-home",
-        active: true,
+        to: "/admin",
       },
       {
-        label: "Inbox",
+        label: "Products",
+        icon: "i-heroicons-shopping-bag",
+        to: "/admin/products",
+      },
+      {
+        label: "Categories",
+        icon: "i-heroicons-tag",
+        to: "/admin/categories",
+
+      },
+         {
+        label: "Reviews",
+        icon: "i-heroicons-clipboard-document-list",
+        to: "/admin/reviews",
+      },
+      {
+        label: "Notifications",
         icon: "i-heroicons-inbox",
         badge: "4",
+        to: "/admin/notifications",
       },
       {
-        label: "Contacts",
+        label: "Users",
         icon: "i-heroicons-users",
-      },
-      {
-        label: "Settings",
-        icon: "i-heroicons-cog",
-        defaultOpen: true,
-        children: [
-          {
-            label: "General",
-          },
-          {
-            label: "Members",
-          },
-          {
-            label: "Notifications",
-          },
-        ],
+        to: "/admin/users",
       },
     ],
     [
       {
-        label: "Feedback",
-        icon: "i-heroicons-message-circle",
-        to: "https://github.com/nuxt-ui-templates/dashboard",
-        target: "_blank",
+        label: "Help & Support",
+        icon: "i-heroicons-information-circle",
+        to: "https://github.com/nuxt/ui",
       },
       {
-        label: "Help & Support",
-        icon: "i-heroicons-info",
-        to: "https://github.com/nuxt/ui",
-        target: "_blank",
+        label: "Logout",
+        ui: { linkLeadingIcon: "text-error", link: "text-error" },
+        icon: "i-heroicons-arrow-left-start-on-rectangle",
+        to: "",
       },
     ],
   ];
@@ -57,28 +58,11 @@
     resizable
     :ui="{ footer: 'border-t border-default' }"
   >
-    <template #header="{ collapsed }">
-      <Logo v-if="!collapsed" class="h-5 w-auto shrink-0" />
+    <template #header>
       <UDashboardSidebarCollapse variant="subtle" />
     </template>
 
     <template #default="{ collapsed }">
-      <UButton
-        :label="collapsed ? undefined : 'Search...'"
-        icon="i-heroicons-magnifying-glass"
-        color="neutral"
-        variant="outline"
-        block
-        :square="collapsed"
-      >
-        <template v-if="!collapsed" #trailing>
-          <div class="flex items-center gap-0.5 ms-auto">
-            <UKbd value="meta" variant="subtle" />
-            <UKbd value="K" variant="subtle" />
-          </div>
-        </template>
-      </UButton>
-
       <UNavigationMenu
         :collapsed="collapsed"
         :items="items[0]"

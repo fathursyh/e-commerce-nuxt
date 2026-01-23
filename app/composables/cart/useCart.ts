@@ -63,6 +63,7 @@ export const useCart = () => {
     saveCart();
   };
 
+  /** @param silent when silent is true, no toast will be shown */
   const clearCart = async(silent = false) => {
     if (cart.value.length === 0) return;
     try {

@@ -1,5 +1,5 @@
 <template>
-    <p>main dashboard</p>
+    <p>reviews</p>
 </template>
 
 <script setup lang="ts">
