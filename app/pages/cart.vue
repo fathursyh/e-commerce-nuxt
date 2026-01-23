@@ -79,7 +79,9 @@
                 <div class="flex justify-between text-gray-600">
                   <span>Tax (8%)</span>
                   <span>
-                    ${{ data?.data?.estimates.tax.toFixed(2) ?? tax.toFixed(2) }}
+                    ${{
+                      data?.data?.estimates.tax.toFixed(2) ?? tax.toFixed(2)
+                    }}
                   </span>
                 </div>
                 <div
@@ -127,9 +129,13 @@
         </div>
       </div>
     </ClientOnly>
-    <UModal v-model:open="shippingDialog" title="Shipping Detail" :dismissible="false">
-      <template #body>
-        <UiShippingForm />
+    <UModal
+      v-model:open="shippingDialog"
+      title="Shipping Detail"
+      :dismissible="false"
+    >
+      <template #body="{ close }">
+        <UiShippingForm @close="close" />
       </template>
     </UModal>
   </div>
@@ -146,15 +152,7 @@
   const { data, suspense } = initCheckout();
   await suspense();
 
-  const { mutate } = checkOut({
-    items: cart.value.map((cartItem) => ({
-      product_id: cartItem.product_id,
-      quantity: cartItem.quantity,
-    })),
-    billing_address_id: 1,
-    shipping_address_id: 1,
-    payment_method: "bank_transfer",
-  });
+  const { mutate } = checkOut();
 
   const checkOutOrder = () => {
     if (!isAuthenticated.value) {
@@ -168,12 +166,21 @@
     if (!data.value?.data.shipping_address) {
       shippingDialog.value = true;
       toast.add({
+        color: "warning",
         title: "Shipping Address Required",
         description:
           "Please fill your shipping address to proceed your checkout.",
       });
       return;
     }
-    mutate();
+    mutate({
+      items: cart.value.map((cartItem) => ({
+        product_id: cartItem.product_id,
+        quantity: cartItem.quantity,
+      })),
+      billing_address_id: data.value?.data.billing_address.id,
+      shipping_address_id: data.value?.data.shipping_address.id,
+      payment_method: "bank_transfer",
+    });
   };
 </script>

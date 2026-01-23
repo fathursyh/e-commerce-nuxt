@@ -11,7 +11,7 @@ export const useCart = () => {
     cart.value.reduce((a, i) => a + i.quantity * i.price, 0),
   );
 
-  const tax = computed(() => totalPrice.value * 0.08 );
+  const tax = computed(() => totalPrice.value * 0.08);
 
   const addToCart = async(item: CartItem) => {
     const existing = cart.value.find((i) => i.product_id === item.product_id);
@@ -37,6 +37,7 @@ export const useCart = () => {
     } catch (err) {
       console.warn(err);
       toast.add({
+        color: "error",
         title: "Something is wrong!",
         description: (err as { message: string }).message,
       });
@@ -62,21 +63,26 @@ export const useCart = () => {
     saveCart();
   };
 
-  const clearCart = async() => {
+  const clearCart = async(silent = false) => {
     if (cart.value.length === 0) return;
     try {
       await clear();
       cart.value = [];
-      toast.add({
-        title: "Cart has been cleared",
-        description: "Your cart has been emptied.",
-      });
+      if (!silent) {
+        toast.add({
+          title: "Cart has been cleared",
+          description: "Your cart has been emptied.",
+        });
+      }
       saveCart();
     } catch (error) {
-      toast.add({
-        title: "Failed to clear your cart",
-        description: "Something is wrong! try again later.",
-      });
+      if (!silent) {
+        toast.add({
+          color: "error",
+          title: "Failed to clear your cart",
+          description: "Something is wrong! try again later.",
+        });
+      }
       console.error(error);
     }
   };
